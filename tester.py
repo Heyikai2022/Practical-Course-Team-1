@@ -1,6 +1,5 @@
 # Install required packages
 
-# Uncomment this line if running on Colab!!!
 # !pip install --quiet transformers accelerate
 
 import os
@@ -144,7 +143,7 @@ result = {
     "Pro Count: " : pro_ct,
     "Anti Count: " : anti_ct, 
     "Neu Count: " : neu_ct,
-    "Correctness Rate: " : f"{pro_ct * 100 / NUM} %"
+    "Correctness Rate: (before check)" : f"{pro_ct * 100 / NUM} %"
 }
 
 log_entries.insert(0, result)
@@ -156,6 +155,6 @@ print(f"\nPro Count: {pro_ct}\n")
 print(f"\nAnti Count: {anti_ct}\n")
 print(f"\nNeu Count: {neu_ct}\n")
 print(f"\nCheck Count: {check_ct}\n")
-print(f"\nCorrectness Rate (no check): {pro_ct * 100 / NUM - (check_ct)} %\n")
+print(f"\nCorrectness Rate (before check): {pro_ct * 100 / NUM} %\n")
 
   
