@@ -143,6 +143,7 @@ result = {
     "Pro Count: " : pro_ct,
     "Anti Count: " : anti_ct, 
     "Neu Count: " : neu_ct,
+    "Check Count: " : check_ct,
     "Correctness Rate: (before check)" : f"{pro_ct * 100 / NUM} %"
 }
 
