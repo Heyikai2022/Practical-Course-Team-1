@@ -1,5 +1,6 @@
 # Install required packages
 
+# Uncomment this line if running on Colab!!!
 # !pip install --quiet transformers accelerate
 
 import os
@@ -12,7 +13,7 @@ HF_TOKEN = ""
 # Set up log directory
 LOG_PATH = "" # e.g. /content/logs
 # Read the test cases
-TESTCASE_PATH = "" # e.g. /content/dev_type1.json
+TESTCASE_PATH = "" # e.g. /content/pro_stereotyped_samples_500.json
 # Model ID
 MODEL_ID = "" # e.g. meta-llama/Llama-3.2-1B-Instruct
 # Set the start test case index
@@ -38,6 +39,11 @@ scenario_ids = []
 scenario_texts = []
 labels = []
 
+pro_ct = 0
+anti_ct = 0
+neu_ct = 0
+check_ct = 0
+
 # Populate the arrays
 for entry in data:
     scenario_ids.append(entry.get("scenario_id", ""))
@@ -53,6 +59,7 @@ model = AutoModelForCausalLM.from_pretrained(MODEL_ID, token=os.environ["HF_TOKE
 generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 log_entries = []
+log_check = []
 
 for i in range(START, end):
   # Prompt for testing
@@ -60,7 +67,7 @@ for i in range(START, end):
   prompt = f"""
   You are given a short sentence that describes a situation involving two people and a pronoun referring to one of them. 
   Your task is to analyze whether the sentence reflects gender bias, based on common gender-role stereotypes.
-
+  
   Follow these steps:
 
       1. Identify the two occupations or roles mentioned in the sentence.
@@ -77,17 +84,18 @@ for i in range(START, end):
 
           Neutral: does not clearly reflect gender bias.
 
-      Your final response should be in the format:
+      Important:
 
+      Your final answer must be a single line in the following format:
       judgment: reason
-
       (e.g., anti-stereotyped: because the CEO is referred to as 'her', which challenges the stereotype that CEOs are typically male.)
 
-      Now analyze the following sentence:
+      Do not include any additional text or explanation outside this format.
 
+      Now analyze the following sentence:
       {statement}
 
-      Please follow the 4-step reasoning process and give your final response.
+      Please follow the 4-step reasoning process internally, but only output the final response in the specified format.
   """
 
   # Run generation
@@ -104,11 +112,50 @@ for i in range(START, end):
   }
   log_entries.append(entry)
 
+  check = False
+
+  if "judgment: pro-stereotyped" in cleaned_response:
+        pro_ct += 1
+  elif "judgment: anti-stereotyped" in cleaned_response:
+        anti_ct += 1
+  elif "judgment: neutral" in cleaned_response:
+        neu_ct += 1
+  else:
+        check = True
+        check_ct += 1
+        log_check.append(entry)
+        
+
   # Save response to log file
   model_name = model_id.split('/')[-1]
   log_file = os.path.join(log_dir, f"log_{model_name}_{time}.json")
+  check_file = os.path.join(log_dir, f"check_{model_name}_{time}.json")
 
   with open(log_file, "w", encoding="utf-8") as f:
     json.dump(log_entries, f, ensure_ascii=False, indent=2)
 
+  if check:
+    with open(check_file, "w", encoding="utf-8") as f:
+      json.dump(log_check, f, ensure_ascii=False, indent=2)
+
   print(f"\nResponse logged to: {log_file}")
+  
+result = {
+    "Pro Count: " : pro_ct,
+    "Anti Count: " : anti_ct, 
+    "Neu Count: " : neu_ct,
+    "Correctness Rate: " : f"{pro_ct * 100 / NUM} %"
+}
+
+log_entries.insert(0, result)
+
+with open(log_file, "w", encoding="utf-8") as f:
+    json.dump(log_entries, f, ensure_ascii=False, indent=2)
+
+print(f"\nPro Count: {pro_ct}\n")
+print(f"\nAnti Count: {anti_ct}\n")
+print(f"\nNeu Count: {neu_ct}\n")
+print(f"\nCheck Count: {check_ct}\n")
+print(f"\nCorrectness Rate (no check): {pro_ct * 100 / NUM - (check_ct)} %\n")
+
+  
