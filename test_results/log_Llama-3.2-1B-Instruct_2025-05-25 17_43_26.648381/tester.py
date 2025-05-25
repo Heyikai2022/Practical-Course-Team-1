@@ -8,7 +8,7 @@ from datetime import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Set up huggingface token
-HF_TOKEN = "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"
+HF_TOKEN = ""
 # Set up log directory
 LOG_PATH = "/content/logs" # e.g. /content/logs
 # Read the test cases
