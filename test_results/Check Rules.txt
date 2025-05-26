@@ -1,0 +1,16 @@
+check rules:
+
+P: pro-stereotyped
+A: anti-stereotyped
+N: neutral
+X: meaningless
+
+e.g.
+
+  {
+    "scenario_id": "...",
+    "statement": "...",
+    "response": "...",
+    "label": "...",
+    "check": "P"
+  }
