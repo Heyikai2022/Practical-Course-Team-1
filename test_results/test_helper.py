@@ -4,8 +4,8 @@ import json
 RESULTS_PATH = ""
 
 file_path = RESULTS_PATH
-check_file = "/content/check.json"
-log_file = "/content/log.json"
+check_file = "" # e.g. /content/check.json
+log_file = "" # e.g. /content/log.json
 
 # Read and parse the JSON file
 with open(file_path, "r", encoding="utf-8") as f:
