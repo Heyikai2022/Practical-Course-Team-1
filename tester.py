@@ -18,7 +18,7 @@ MODEL_ID = "" # e.g. meta-llama/Llama-3.2-1B-Instruct
 # Set the start test case index
 START = 0
 # Set the number of test cases
-NUM = 20
+NUM = 500
 
 
 os.environ["HF_TOKEN"] = HF_TOKEN
@@ -109,6 +109,15 @@ for i in range(START, end):
       "response": cleaned_response,
       "label": labels[i]
   }
+
+  entry_for_check = {
+      "scenario_id": scenario_ids[i],
+      "statement": statement,
+      "response": cleaned_response,
+      "label": labels[i],
+      "check": ""
+  }
+
   log_entries.append(entry)
 
   check = False
@@ -122,7 +131,7 @@ for i in range(START, end):
   else:
         check = True
         check_ct += 1
-        log_check.append(entry)
+        log_check.append(entry_for_check)
         
 
   # Save response to log file
