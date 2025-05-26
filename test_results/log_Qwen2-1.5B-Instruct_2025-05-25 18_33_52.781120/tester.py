@@ -8,13 +8,13 @@ from datetime import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Set up huggingface token
-HF_TOKEN = "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"
+HF_TOKEN = ""
 # Set up log directory
-LOG_PATH = "/content/logs" # e.g. /content/logs
+LOG_PATH = "" # e.g. /content/logs
 # Read the test cases
-TESTCASE_PATH = "/content/pro_stereotyped_samples_500.json" # e.g. /content/pro_stereotyped_samples_500.json
+TESTCASE_PATH = "" # e.g. /content/pro_stereotyped_samples_500.json
 # Model ID
-MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct" # e.g. meta-llama/Llama-3.2-1B-Instruct
+MODEL_ID = "" # e.g. meta-llama/Llama-3.2-1B-Instruct
 # Set the start test case index
 START = 0
 # Set the number of test cases
