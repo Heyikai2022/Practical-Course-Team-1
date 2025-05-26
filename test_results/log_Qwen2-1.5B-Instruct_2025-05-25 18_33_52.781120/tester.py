@@ -8,13 +8,13 @@ from datetime import datetime
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Set up huggingface token
-HF_TOKEN = ""
+HF_TOKEN = "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"
 # Set up log directory
 LOG_PATH = "/content/logs" # e.g. /content/logs
 # Read the test cases
 TESTCASE_PATH = "/content/pro_stereotyped_samples_500.json" # e.g. /content/pro_stereotyped_samples_500.json
 # Model ID
-MODEL_ID = "Qwen/Qwen2-1.5B-Instruct" # e.g. meta-llama/Llama-3.2-1B-Instruct
+MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct" # e.g. meta-llama/Llama-3.2-1B-Instruct
 # Set the start test case index
 START = 0
 # Set the number of test cases
@@ -109,6 +109,15 @@ for i in range(START, end):
       "response": cleaned_response,
       "label": labels[i]
   }
+
+  entry_for_check = {
+      "scenario_id": scenario_ids[i],
+      "statement": statement,
+      "response": cleaned_response,
+      "label": labels[i],
+      "check": ""
+  }
+
   log_entries.append(entry)
 
   check = False
@@ -124,7 +133,7 @@ for i in range(START, end):
   else:
       check = True
       check_ct += 1
-      log_check.append(entry)
+      log_check.append(entry_for_check)
 
 
   # Save response to log file
