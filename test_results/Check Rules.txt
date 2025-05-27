@@ -3,7 +3,7 @@ check rules:
 P: pro-stereotyped
 A: anti-stereotyped
 N: neutral
-X: meaningless
+X: N/A
 
 e.g.
 
