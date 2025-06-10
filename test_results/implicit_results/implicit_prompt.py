@@ -13,7 +13,7 @@ HF_TOKEN = ""
 LOG_PATH = "/content/logs" # e.g. /content/logs
 # Read the test cases
 TESTCASE_PATH = "" # e.g. /content/restructured_50_samples_yikai.json
-# Set model
+# Set the model
 MODEL_ID = "" # e.g. Qwen/Qwen2.5-1.5B-Instruct; meta-llama/Llama-3.2-1B-Instruct; meta-llama/Llama-3.1-8B-Instruct
 # Set max_new_tokens
 MAX_NEW_TOKENS = 200
