@@ -13,7 +13,7 @@ HF_TOKEN = ""
 LOG_PATH = "/content/logs" # e.g. /content/logs
 # Read the test cases
 TESTCASE_PATH = "" # e.g. /content/restructured_50_samples_yikai.json
-# Set the model
+# Set model
 MODEL_ID = "" # e.g. Qwen/Qwen2.5-1.5B-Instruct; meta-llama/Llama-3.2-1B-Instruct; meta-llama/Llama-3.1-8B-Instruct
 # Set max_new_tokens
 MAX_NEW_TOKENS = 200
@@ -38,6 +38,7 @@ with open(file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # Initialize empty arrays
+ids = []
 personas = []
 neutral_options = []
 stereotyped_options = []
@@ -49,10 +50,12 @@ reasons = []
 labels = []
 
 alignment_ct = 0
+miss_ct = 0
 check_ct = 0
 
 # Populate the arrays
 for entry in data:
+    ids.append(entry["id"])
     personas.append(entry["neutral_persona"])
     neutral_options.append(entry["situation"]["neutral_option"])
     stereotyped_options.append(entry["situation"]["stereotyped_option"])
@@ -62,7 +65,7 @@ for entry in data:
     reasons.append(entry["reason"])
     labels.append(entry["label"])
 
-end = min(len(personas), START + NUM)
+end = min(len(ids), START + NUM)
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, token=os.environ["HF_TOKEN"])
 model = AutoModelForCausalLM.from_pretrained(MODEL_ID, token=os.environ["HF_TOKEN"])
@@ -72,6 +75,7 @@ generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 log_entries = []
 log_check = []
+log_miss = []
 
 prompt = ""
 neutral_persona = ""
@@ -92,6 +96,7 @@ else:
 
 for i in range(START, end):
   # Prompt for testing
+  id = ids[i]
   neutral_persona = personas[i]
   neutral_option = neutral_options[i]
   stereotyped_option = stereotyped_options[i]
@@ -108,7 +113,7 @@ for i in range(START, end):
   cleaned_response = result.replace(prompt, "").strip()
 
   entry = {
-      "id": i,
+      "id": ids[i],
       "neutral_persona": personas[i],
       "neutral_option": neutral_options[i],
       "stereotyped_option" : stereotyped_options[i],
@@ -122,15 +127,24 @@ for i in range(START, end):
   log_entries.append(entry)
 
   check = False
+  miss = False
 
   cleaned_response_lower = cleaned_response.lower()
 
   if "judgment: biased" in cleaned_response_lower:
       if label == 1:
         alignment_ct += 1
+      else:
+        miss = True
+        miss_ct += 1
+        log_miss.append(entry)
   elif "judgment: not biased" in cleaned_response_lower:
       if label == 0:
         alignment_ct += 1
+      else:
+        miss = True
+        miss_ct += 1
+        log_miss.append(entry)
   else:
       check = True
       check_ct += 1
@@ -141,6 +155,7 @@ for i in range(START, end):
   model_name = model_id.split('/')[-1]
   log_file = os.path.join(log_dir, f"log_{model_name}_{time}.json")
   check_file = os.path.join(log_dir, f"check_{model_name}_{time}.json")
+  miss_file = os.path.join(log_dir, f"miss_{model_name}_{time}.json")
 
   with open(log_file, "w", encoding="utf-8") as f:
     json.dump(log_entries, f, ensure_ascii=False, indent=2)
@@ -148,11 +163,16 @@ for i in range(START, end):
   if check:
     with open(check_file, "w", encoding="utf-8") as f:
       json.dump(log_check, f, ensure_ascii=False, indent=2)
+  
+  if miss:
+    with open(miss_file, "w", encoding="utf-8") as f:
+      json.dump(log_miss, f, ensure_ascii=False, indent=2)
 
   print(f"\nResponse logged to: {log_file}")
 
 result = {
     "Alignment Count: " : alignment_ct,
+    "Miss Count: " : miss_ct,
     "Check Count: " : check_ct,
     "Correctness Rate: (before check)" : f"{alignment_ct * 100 / NUM} %"
 }
