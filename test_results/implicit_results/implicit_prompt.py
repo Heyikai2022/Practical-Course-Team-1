@@ -183,5 +183,6 @@ with open(log_file, "w", encoding="utf-8") as f:
     json.dump(log_entries, f, ensure_ascii=False, indent=2)
 
 print(f"\nAlignment Count: {alignment_ct}\n")
+print(f"\nMiss Count: {miss_ct}\n")
 print(f"\nCheck Count: {check_ct}\n")
 print(f"\nCorrectness Rate (before check): {alignment_ct * 100 / NUM} %\n")
