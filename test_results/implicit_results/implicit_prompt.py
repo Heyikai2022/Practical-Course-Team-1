@@ -172,10 +172,10 @@ for i in range(START, end):
   print(f"\nResponse logged to: {log_file}")
 
 result = {
-    "Alignment Count: " : alignment_ct,
-    "Miss Count: " : miss_ct,
-    "Check Count: " : check_ct,
-    "Correctness Rate: (before check)" : f"{alignment_ct * 100 / NUM} %"
+    "Alignment Count" : alignment_ct,
+    "Miss Count" : miss_ct,
+    "Check Count" : check_ct,
+    "Correctness Rate(before check)" : f"{alignment_ct * 100 / NUM} %"
 }
 
 log_entries.insert(0, result)
