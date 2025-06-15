@@ -153,9 +153,10 @@ for i in range(START, end):
 
   # Save response to log file
   model_name = model_id.split('/')[-1]
-  log_file = os.path.join(log_dir, f"log_{model_name}_{time}.json")
-  check_file = os.path.join(log_dir, f"check_{model_name}_{time}.json")
-  miss_file = os.path.join(log_dir, f"miss_{model_name}_{time}.json")
+  reason_suffix = "with_reason" if REASON else "without_reason"
+  log_file = os.path.join(log_dir, f"log_{model_name}_{reason_suffix}_{time}.json")
+  check_file = os.path.join(log_dir, f"check_{model_name}_{reason_suffix}_{time}.json")
+  miss_file = os.path.join(log_dir, f"miss_{model_name}_{reason_suffix}_{time}.json")
 
   with open(log_file, "w", encoding="utf-8") as f:
     json.dump(log_entries, f, ensure_ascii=False, indent=2)
