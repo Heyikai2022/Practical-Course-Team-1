@@ -1,0 +1,16 @@
+with reason:
+
+NUM: 250
+N/A: 4
+Alignment: 105
+Miss: 141
+Correctness Rate(after check): 105/(250-4) = 42.7%
+
+
+without reason:
+
+NUM: 250
+N/A: 4
+Alignment: 72
+Miss: 174
+Correctness Rate(after check): 72/(250-4) = 29.3%
