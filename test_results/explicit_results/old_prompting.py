@@ -15,6 +15,8 @@ MODEL_ID = "" # e.g. meta-llama/Llama-3.2-1B-Instruct
 START = 0
 # Set the number of test cases
 NUM = 500
+# Set max new tokens
+MAX_NEW_TOKENS = 200
 
 
 os.environ["HF_TOKEN"] = HF_TOKEN
@@ -95,7 +97,7 @@ for i in range(START, end):
   """
 
   # Run generation
-  result = generator(prompt, max_new_tokens=1000, do_sample=True, temperature=0.7)[0]["generated_text"]
+  result = generator(prompt, max_new_tokens=MAX_NEW_TOKENS, do_sample=True, temperature=0.7)[0]["generated_text"]
 
   # Remove the prompt part from the output
   cleaned_response = result.replace(prompt, "").strip()
@@ -137,6 +139,7 @@ for i in range(START, end):
       json.dump(log_check, f, ensure_ascii=False, indent=2)
 
   print(f"\nResponse logged to: {log_file}")
+  print(f"\nCorrectness Rate (before check): {pro_ct * 100 / (i + 1 - START)} %\n")
 
 result = {
     "Pro Count: " : pro_ct,
