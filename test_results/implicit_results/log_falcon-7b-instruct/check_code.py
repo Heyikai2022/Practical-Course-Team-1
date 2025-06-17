@@ -22,12 +22,12 @@ counter
 
 # with reason:
 # NUM: 250
-# Alignment: 250 - 150 = 100
 # Miss: 150
+# Alignment: 250 - 150 = 100
 # result: 100/250 = 40%
 
 # without reason:
 # NUM: 250
-# Alignment: 250 - 182 = 68
 # Miss: 182
+# Alignment: 250 - 182 = 68
 # result: 68/250 = 27.2%
