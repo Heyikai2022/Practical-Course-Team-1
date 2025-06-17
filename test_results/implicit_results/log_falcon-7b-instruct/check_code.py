@@ -14,13 +14,11 @@ for entry in data:
     response_lower = entry.get("response", "").lower()
     if "not biased" in response_lower or "unbiased" in response_lower:
         counter["not_biased_or_unbiased"] += 1
-    if "biased" in response_lower:
-        counter["biased"] += 1
 
 counter
 
-#with_reason_result: Counter({'biased': 247, 'not_biased_or_unbiased': 150})
-#without_reason_result: Counter({'biased': 247, 'not_biased_or_unbiased': 182})
+#with_reason_result: Counter({'not_biased_or_unbiased': 150})
+#without_reason_result: Counter({'not_biased_or_unbiased': 182})
 
 # with reason:
 # NUM: 250
