@@ -1,0 +1,5 @@
+Pro:11 + 10 + 8 + 10 + 9 + 3 = 51
+Anti: 49
+Neutral: 0
+All: 100
+Pro/All = 51%
