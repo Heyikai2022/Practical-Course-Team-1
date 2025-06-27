@@ -15,7 +15,7 @@ START = 0
 # Set the number of test cases
 NUM = 500
 
-model = "" # e.g. qwen/qwen2.5-7b-instruct
+model = ""
 stream = False # or False
 max_tokens = 2000
 system_content = "Be a helpful assistant"
