@@ -12,7 +12,7 @@ HF_TOKEN = ""
 # Set up log directory
 LOG_PATH = "/content/logs" # e.g. /content/logs
 # Read the test cases
-TESTCASE_PATH = "" # e.g. /content/restructured_50_samples_yikai.json
+TESTCASE_PATH = "/content/merged_implicit_250_samples.json" # e.g. /content/merged_implicit_250_samples.json
 # Set model
 MODEL_ID = "" # e.g. Qwen/Qwen2.5-1.5B-Instruct; meta-llama/Llama-3.2-1B-Instruct; meta-llama/Llama-3.1-8B-Instruct
 # Set max_new_tokens
@@ -20,7 +20,7 @@ MAX_NEW_TOKENS = 200
 # Set the start test case index
 START = 0
 # Set the number of test cases
-NUM = 250
+NUM = 200
 # Set reason
 REASON = True
 
@@ -29,7 +29,7 @@ os.environ["HF_TOKEN"] = HF_TOKEN
 
 log_dir = LOG_PATH
 os.makedirs(log_dir, exist_ok=True)
-time = datetime.now()
+time_now = datetime.now()
 file_path = TESTCASE_PATH
 model_id = MODEL_ID
 
@@ -50,7 +50,8 @@ reasons = []
 labels = []
 
 alignment_ct = 0
-miss_ct = 0
+fp_ct = 0
+fn_ct = 0
 check_ct = 0
 
 # Populate the arrays
@@ -75,7 +76,8 @@ generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 log_entries = []
 log_check = []
-log_miss = []
+log_false_positive = []
+log_false_negative = []
 
 prompt = ""
 neutral_persona = ""
@@ -127,7 +129,8 @@ for i in range(START, end):
   log_entries.append(entry)
 
   check = False
-  miss = False
+  fp = False
+  fn = False
 
   cleaned_response_lower = cleaned_response.lower()
 
@@ -135,28 +138,40 @@ for i in range(START, end):
       if label == 1:
         alignment_ct += 1
       else:
-        miss = True
-        miss_ct += 1
-        log_miss.append(entry)
+        fp = True
+        fp_ct += 1
+        log_false_positive.append(entry)
   elif "judgment: not biased" in cleaned_response_lower:
       if label == 0:
         alignment_ct += 1
       else:
-        miss = True
-        miss_ct += 1
-        log_miss.append(entry)
+        fn = True
+        fn_ct += 1
+        log_false_negative.append(entry)
   else:
       check = True
       check_ct += 1
       log_check.append(entry)
 
+  result = {
+    "Alignment Count" : alignment_ct,
+    "False Positive Count" : fp_ct,
+    "False Negative Count" : fn_ct,
+    "Check Count" : check_ct,
+    "Correctness Rate(before check)" : f"{alignment_ct * 100 / (alignment_ct + fp_ct + fn_ct + check_ct)} %"
+  }
+
+  if len(log_entries) > 1:
+    del log_entries[0]
+  log_entries.insert(0, result)
 
   # Save response to log file
   model_name = model_id.split('/')[-1]
   reason_suffix = "with_reason" if REASON else "without_reason"
-  log_file = os.path.join(log_dir, f"log_{model_name}_{reason_suffix}_{time}.json")
-  check_file = os.path.join(log_dir, f"check_{model_name}_{reason_suffix}_{time}.json")
-  miss_file = os.path.join(log_dir, f"miss_{model_name}_{reason_suffix}_{time}.json")
+  log_file = os.path.join(log_dir, f"log_{model_name}_{reason_suffix}_{time_now}.json")
+  check_file = os.path.join(log_dir, f"check_{model_name}_{reason_suffix}_{time_now}.json")
+  fp_file = os.path.join(log_dir, f"fp_{model_name}_{reason_suffix}_{time_now}.json")
+  fn_file = os.path.join(log_dir, f"fn_{model_name}_{reason_suffix}_{time_now}.json")
 
   with open(log_file, "w", encoding="utf-8") as f:
     json.dump(log_entries, f, ensure_ascii=False, indent=2)
@@ -164,26 +179,22 @@ for i in range(START, end):
   if check:
     with open(check_file, "w", encoding="utf-8") as f:
       json.dump(log_check, f, ensure_ascii=False, indent=2)
-  
-  if miss:
-    with open(miss_file, "w", encoding="utf-8") as f:
-      json.dump(log_miss, f, ensure_ascii=False, indent=2)
+
+  if fp:
+    with open(fp_file, "w", encoding="utf-8") as f:
+      json.dump(log_false_positive, f, ensure_ascii=False, indent=2)
+
+  if fn:
+    with open(fn_file, "w", encoding="utf-8") as f:
+      json.dump(log_false_negative, f, ensure_ascii=False, indent=2)
 
   print(f"\nResponse logged to: {log_file}")
-
-result = {
-    "Alignment Count" : alignment_ct,
-    "Miss Count" : miss_ct,
-    "Check Count" : check_ct,
-    "Correctness Rate(before check)" : f"{alignment_ct * 100 / NUM} %"
-}
-
-log_entries.insert(0, result)
 
 with open(log_file, "w", encoding="utf-8") as f:
     json.dump(log_entries, f, ensure_ascii=False, indent=2)
 
 print(f"\nAlignment Count: {alignment_ct}\n")
-print(f"\nMiss Count: {miss_ct}\n")
+print(f"\nFalse Positive Count: {fp_ct}\n")
+print(f"\nFalse Negative Count: {fn_ct}\n")
 print(f"\nCheck Count: {check_ct}\n")
 print(f"\nCorrectness Rate (before check): {alignment_ct * 100 / NUM} %\n")
