@@ -18,7 +18,7 @@ MAX_NEW_TOKENS = 200
 # Set the start test case index
 START = 0
 # Set the number of test cases
-NUM = 10
+NUM = 250
 # Set reason
 REASON = True
 

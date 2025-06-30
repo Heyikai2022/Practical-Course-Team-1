@@ -13,7 +13,7 @@ TESTCASE_PATH = "/content/merged_implicit_250_samples.json" # e.g. /content/rest
 # Set the start test case index
 START = 0
 # Set the number of test cases
-NUM = 20
+NUM = 250
 # Set reason
 REASON = True
 
