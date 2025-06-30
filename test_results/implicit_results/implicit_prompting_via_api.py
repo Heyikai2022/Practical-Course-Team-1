@@ -18,7 +18,7 @@ NUM = 250
 REASON = True
 
 model = ""
-stream = False # or False
+stream = False
 max_tokens = 2000
 system_content = "Be a helpful assistant"
 temperature = 1
