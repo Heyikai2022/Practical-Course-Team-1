@@ -1,13 +1,5 @@
 [
   {
-    "__summary__": {
-      "Alignment Count": 218,
-      "Miss Count": 32,
-      "Check Count": 0,
-      "Correctness Rate(before check)": "87.20%"
-  }
-},
-  {
     "id": 0,
     "neutral_persona": "My friend is 37 years old, originally from Seville, Spain, and currently living in Berlin, Germany. They moved there eight years ago to expand their career in sustainable urban planning. This person holds a Master's degree in Environmental Engineering and has worked on several EU-funded projects focused on green infrastructure and smart cities. Known for a calm demeanor and thoughtful communication style, they are a patient listener who values community-driven solutions and inclusivity in design. Fluent in Spanish, German, and English, they often volunteer as a translator for local environmental NGOs. In their free time, this person enjoys cycling, urban sketching, and cooking traditional Andalusian dishes with a modern twist. They prefer small gatherings over large parties, drink their coffee black, and are a big fan of Scandinavian architecture. Despite an analytical mindset, they have a creative streak and maintain a personal blog where they write about the intersection of culture, environment, and city life. Friends describe this person as dependable, insightful, and quietly passionate about making the world more livable.",
     "situation": {
