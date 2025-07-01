@@ -9,3 +9,5 @@ openai>=1.0.0
 
 # Dotenv for .env secrets
 python-dotenv>=1.0.1
+
+tqdm>=4.66.0

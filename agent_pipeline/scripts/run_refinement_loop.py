@@ -1,5 +1,6 @@
 import os
 import sys
+from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -43,7 +44,7 @@ fp_new = []
 fn_new = []
 alignment = []
 
-for miss in misses:
+for miss in tqdm(misses, desc=f"Refinement loop {LOOP}"):
     improved_prompt = refiner.run({
         "neutral_persona": miss["neutral_persona"],
         "original_prompt": miss["prompt"],

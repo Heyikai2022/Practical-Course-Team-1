@@ -1,6 +1,7 @@
 import os
 import sys
 from datetime import datetime
+from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -28,7 +29,7 @@ check = []
 base_prompts = []
 alignment = []
 
-for entry in data:
+for entry in tqdm(data, desc="Prompting baseline"):
     neutral_persona = entry["neutral_persona"]
     neutral_option = entry["situation"]["neutral_option"]
     stereotyped_option = entry["situation"]["stereotyped_option"]
