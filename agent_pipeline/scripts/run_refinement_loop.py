@@ -19,7 +19,7 @@ model_name = TARGET_MODEL_NAME.split("/")[-1]
 
 # === Build paths ===
 if LOOP == 1:
-    previous_dir = f"results/{model_name}/{BASELINE_TIMESTAMP}_{reason_suffix}"
+    previous_dir = f"results/{model_name}/{BASELINE_TIMESTAMP}_{reason_suffix}_base"
 else:
     previous_dir = f"results/{model_name}/{BASELINE_TIMESTAMP}_{reason_suffix}_loop{LOOP - 1}"
 
