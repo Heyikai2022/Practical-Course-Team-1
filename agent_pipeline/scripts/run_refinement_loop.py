@@ -5,7 +5,7 @@ from tqdm import tqdm
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agents.prompt_refiner import get_refinement_chain
-from agents.target_model import call_novita_target_model
+from agents.target_model import call_target_model
 from utils.evaluation import parse_judgment, compare, compute_metrics
 from utils.io import load_json, save_json
 
@@ -50,8 +50,8 @@ for miss in tqdm(misses, desc=f"Refinement loop {LOOP}"):
         "original_prompt": miss["prompt"],
         "original_output": miss["response"]
     })
-
-    new_output = call_novita_target_model(improved_prompt)
+    
+    new_output = call_target_model(improved_prompt)
     new_judgment = parse_judgment(new_output)
     new_outcome = compare(new_judgment, miss["label"])
 

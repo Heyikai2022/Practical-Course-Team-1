@@ -1,14 +1,25 @@
+# OpenAI
+from langchain_openai import ChatOpenAI
+# Google
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
-from config.settings import PROMPT_REFINER_MODEL
+from config.settings import CORE_AGENT, PROMPT_REFINER_MODEL
 
 def get_refinement_chain():
-    llm = ChatGoogleGenerativeAI(
-        model = PROMPT_REFINER_MODEL, 
-        temperature = 0.0
-    )
+    if CORE_AGENT == "gemini":
+        llm = ChatGoogleGenerativeAI(
+            model = PROMPT_REFINER_MODEL, 
+            temperature = 0.0
+        )
+    elif CORE_AGENT == "openai":
+        llm = ChatOpenAI(
+            model = PROMPT_REFINER_MODEL, 
+            temperature = 0.0, 
+        )
+    else:
+        raise ValueError(f"Unsupported CORE_AGENT: {CORE_AGENT}")
     
     prompt = PromptTemplate(
         input_variables=[

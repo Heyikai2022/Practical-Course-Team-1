@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from agents.target_model import call_novita_target_model
+from agents.target_model import call_target_model
 from utils.evaluation import parse_judgment, compare, compute_metrics
 from utils.io import load_json, save_json
 
@@ -19,8 +19,8 @@ model_name = TARGET_MODEL_NAME.split("/")[-1]
 result_dir = f"results/{model_name}/{time_now}_{reason_suffix}_base"
 os.makedirs(result_dir, exist_ok=True)
 
-# data = load_json("../dataset/implicit_dataset/test_samples.json")    # For testing
-data = load_json("../dataset/implicit_dataset/merged_implicit_250_samples.json")
+data = load_json("../dataset/implicit_dataset/test_samples.json")    # For testing
+# data = load_json("../dataset/implicit_dataset/merged_implicit_250_samples.json")
 
 log = []
 fp = []
@@ -63,7 +63,7 @@ for entry in tqdm(data, desc="Prompting baseline"):
             f"Do not include any other text."
         )
         
-    output = call_novita_target_model(prompt=prompt)
+    output = call_target_model(prompt=prompt)
     parsed = parse_judgment(output=output)
     outcome = compare(parsed, entry["label"])
     
