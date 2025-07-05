@@ -1,0 +1,12 @@
+{
+  "model": "qwen2.5-7b-instruct",
+  "reason": "without_reason",
+  "alignments": 27,
+  "fp": 1,
+  "fn": 221,
+  "check": 1,
+  "accuracy": 0.10843373493975904,
+  "balanced_accuracy": 0.49025974025974023,
+  "mcc": -0.01545763729121829,
+  "timestamp": "20250701_045559"
+}
