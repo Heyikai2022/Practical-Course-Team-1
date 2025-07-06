@@ -1,0 +1,12 @@
+{
+  "model": "deepseek-r1-0528",
+  "reason": "with_reason",
+  "alignments": 226,
+  "fp": 10,
+  "fn": 14,
+  "check": 0,
+  "accuracy": 0.904,
+  "balanced_accuracy": 0.553921568627451,
+  "mcc": 0.09418976100189144,
+  "timestamp": "20250706_101426"
+}
