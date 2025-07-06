@@ -21,8 +21,7 @@ def compare(pred: str, label: int) -> str:
 def compute_metrics(all_alignment, fp_new, fn_new):
     """
     Compute accuracy, balanced accuracy, and MCC.
-    - prev_alignment: list of dicts with "label"
-    - new_alignment: list of dicts with "label"
+    - all_alignment: list of dicts with "label"
     - fp_new: list of dicts with "label"
     - fn_new: list of dicts with "label"
     """
