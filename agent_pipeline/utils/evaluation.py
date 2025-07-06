@@ -18,7 +18,7 @@ def compare(pred: str, label: int) -> str:
         return "fn"
     return "check"
 
-def compute_metrics(prev_alignment, new_alignment, fp_new, fn_new):
+def compute_metrics(all_alignment, fp_new, fn_new):
     """
     Compute accuracy, balanced accuracy, and MCC.
     - prev_alignment: list of dicts with "label"
@@ -27,8 +27,8 @@ def compute_metrics(prev_alignment, new_alignment, fp_new, fn_new):
     - fn_new: list of dicts with "label"
     """
 
-    tp = sum(1 for x in prev_alignment if x["label"] == 1) + sum(1 for x in new_alignment if x["label"] == 1)
-    tn = sum(1 for x in prev_alignment if x["label"] == 0) + sum(1 for x in new_alignment if x["label"] == 0)
+    tp = sum(1 for x in all_alignment if x["label"] == 1)
+    tn = sum(1 for x in all_alignment if x["label"] == 0)
     fp = len(fp_new)
     fn = len(fn_new)
 

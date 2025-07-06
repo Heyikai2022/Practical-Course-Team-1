@@ -38,11 +38,19 @@ fp = load_json(f"{previous_dir}/fp.json")
 fn = load_json(f"{previous_dir}/fn.json")
 misses = fp + fn
 
+# Load all prev alignments so far:
+previous_summary = load_json(f"{previous_dir}/refined_summary.json") \
+    if os.path.exists(f"{previous_dir}/refined_summary.json") \
+    else load_json(f"{previous_dir}/summary.json")
+
+prev_alignment = previous_summary.get("all_alignment", [])
+
+# === Set up ===
 refiner = get_refinement_chain()
 log_prompts = []
 fp_new = []
 fn_new = []
-alignment = []
+new_alignment = []
 
 for miss in tqdm(misses, desc=f"Refinement loop {LOOP}"):
     improved_prompt = refiner.run({
@@ -64,25 +72,28 @@ for miss in tqdm(misses, desc=f"Refinement loop {LOOP}"):
     })
     
     if new_outcome == "alignment":
-        alignment.append(miss)
+        new_alignment.append(miss)
     elif new_outcome == "fp":
         fp_new.append(miss)
     elif new_outcome == "fn":
         fn_new.append(miss)
+        
+# Combine all alignments so far
+all_alignment = prev_alignment + new_alignment
 
 save_json(f"{result_dir}/refined_results.json", log_prompts)
 save_json(f"{result_dir}/fp.json", fp_new)
 save_json(f"{result_dir}/fn.json", fn_new)
-save_json(f"{result_dir}/alignment.json", alignment)
 
-metrics = compute_metrics(prev_alignment, alignment, fp_new, fn_new)
+# === Compute metrics ===
+metrics = compute_metrics(prev_alignment, all_alignment, fp_new, fn_new)
 
 summary = {
     "baseline": BASELINE_TIMESTAMP,
     "loop": LOOP,
     "reason": reason_suffix,
     "refined": len(log_prompts),
-    "new_alignment": len(alignment), 
+    "new_alignment": len(new_alignment), 
     "fp": len(fp_new), 
     "fn": len(fn_new), 
     **metrics
@@ -94,6 +105,6 @@ print(f"✅ Refinement loop {LOOP} done: {len(log_prompts)} refined.")
 print(f"  ✔️ Accuracy: {metrics['accuracy']:.4f}")
 print(f"  ✔️ Balanced Accuracy: {metrics['balanced_accuracy']:.4f}")
 print(f"  ✔️ MCC: {metrics['mcc']:.4f}")
-print(f" Alignments this loop: {len(alignment)}")
+print(f" Alignments this loop: {len(new_alignment)}")
 print(f" Remaining FP: {len(fp_new)} | FN: {len(fn_new)}")
 print(f"📁 Results saved to: {result_dir}")
