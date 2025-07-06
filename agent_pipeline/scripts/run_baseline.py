@@ -9,18 +9,18 @@ from agents.target_model import call_target_model
 from utils.evaluation import parse_judgment, compare, compute_metrics
 from utils.io import load_json, save_json
 
-from config.settings import TARGET_MODEL_NAME, REASON
+from config.settings import PROMPT_REFINER_MODEL, TARGET_MODEL_NAME, REASON
 
 time_now = datetime.now().strftime("%Y%m%d_%H%M%S")
 reason_suffix = "with_reason" if REASON else "without_reason"
 model_name = TARGET_MODEL_NAME.split("/")[-1]
 
 # Create folder name
-result_dir = f"results/{model_name}/{time_now}_{reason_suffix}_base"
+result_dir = f"../../test_results/agent_results/{PROMPT_REFINER_MODEL}/{model_name}/{time_now}_{reason_suffix}_base"
 os.makedirs(result_dir, exist_ok=True)
 
-data = load_json("../dataset/implicit_dataset/test_samples.json")    # For testing
-# data = load_json("../dataset/implicit_dataset/merged_implicit_250_samples.json")
+# data = load_json("../../dataset/implicit_dataset/test_samples.json")    # For testing
+data = load_json("../../dataset/implicit_dataset/merged_implicit_250_samples.json")
 
 log = []
 fp = []
@@ -87,7 +87,7 @@ save_json(f"{result_dir}/check.json", check)
 save_json(f"{result_dir}/base_prompts.json", base_prompts)
 save_json(f"{result_dir}/alignment.json", alignment)
 
-metrics = compute_metrics([], alignment, fp, fn)
+metrics = compute_metrics(alignment, fp, fn)
 
 summary = {
     "model": model_name,
