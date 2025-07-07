@@ -5,15 +5,15 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
-from config.settings import CORE_AGENT, PROMPT_REFINER_MODEL
+from config.settings import CORE_AGENT_SOURCE, PROMPT_REFINER_MODEL
 
 def get_refinement_chain():
-    if CORE_AGENT == "gemini":
+    if CORE_AGENT_SOURCE == "gemini":
         llm = ChatGoogleGenerativeAI(
             model = PROMPT_REFINER_MODEL, 
             temperature = 0.0
         )
-    elif CORE_AGENT == "openai":
+    elif CORE_AGENT_SOURCE == "openai":
         llm = ChatOpenAI(
             model = PROMPT_REFINER_MODEL, 
             temperature = 0.0, 
