@@ -11,12 +11,12 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # === Model SOURCES ===
-CORE_AGENT_SOURCE = "gemini" # or "openai"
-TARGET_MODEL_SOURCE = "gemini" # or "novita" or "openai" 
+CORE_AGENT_SOURCE = "openai" # or "openai"
+TARGET_MODEL_SOURCE = "novita" # or "novita" or "openai" 
 
 # === Model NAMES ===
-PROMPT_REFINER_MODEL = "gemini-1.5-pro-latest" # or "gpt-3.5-turbo"
-TARGET_MODEL_NAME = "gemini-1.5-pro-latest" # Edit the target model here manually
+PROMPT_REFINER_MODEL = "gpt-3.5-turbo" # or "gpt-3.5-turbo"
+TARGET_MODEL_NAME = "meta-llama/llama-3.3-70b-instruct" # Edit the target model here manually
 
 # === Experiment ===
-REASON = True # Edit REASON manually to test different prompts
+REASON = False # Edit REASON manually to test different prompts
