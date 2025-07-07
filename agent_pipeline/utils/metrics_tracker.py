@@ -66,6 +66,7 @@ def collect_all_models_metrics(base_result_path, model_runs, reason):
 
                     all_records.append({
                         "model": model_name,
+                        "reason": reason,
                         "loop": loop,
                         "accuracy": summary.get("accuracy", 0),
                         "balanced_accuracy": summary.get("balanced_accuracy", 0),
@@ -113,3 +114,49 @@ def plot_metric_comparison(df, metric="accuracy", reason="with_reason", output_f
     plt.savefig(output_file, dpi=150)
     plt.close()
     print(f"✅ Saved: {output_file}")
+    
+def plot_reason_comparison(df, metric="accuracy", output_file=None):
+    if df.empty or "model" not in df.columns or "reason" not in df.columns:
+        print(f"⚠️ No data for {metric} reason comparison.")
+        return
+    plt.figure(figsize=(10, 6))
+    
+    COLORS = ["blue", "green", "red", "purple", "orange", "brown"]
+    models = sorted(df["model"].unique())
+    color_map = {model: COLORS[i % len(COLORS)] for i, model in enumerate(models)}
+    
+    for model in df["model"].unique():
+        for reason in df["reason"].unique():
+            subset = df[(df["model"] == model) & (df["reason"] == reason)]
+            if subset.empty:
+                continue
+        
+            linestyle = "-" if reason == "with_reason" else "--"
+            color = color_map[model]
+            
+            plt.plot(
+                subset["loop"],
+                subset[metric],
+                linestyle, 
+                marker="o", 
+                color=color,
+                label=f"{model} ({reason})"
+            )
+            
+    plt.title(f"{metric.capitalize()} Trend: With vs Without Reason (All Models)")
+    plt.xlabel("Refinemnt Loop")
+    plt.ylabel(metric.capitalize())
+    if metric == "mcc":
+        plt.ylim(-1, 1)
+    else:
+        plt.ylim(0, 1)
+    plt.grid(True)
+    plt.legend(loc='upper left', bbox_to_anchor=(1.0, 1.0))
+    plt.tight_layout()
+    
+    if output_file is None:
+        output_file = f"../visualizations/reason_comparison/core_{PROMPT_REFINER_MODEL}_{metric}_trend.png"
+    
+    plt.savefig(output_file, dpi=150)
+    plt.close()
+    print(f"✅ Saved: {metric}_reason_comparison.png")
