@@ -7,7 +7,7 @@ from collections import defaultdict
 from utils.io import load_json
 from config.settings import PROMPT_REFINER_MODEL
 
-def auto_collect_anchors(base_result_path="../../test_results/agent_results/gemini-1.5-pro-latest"):
+def auto_collect_anchors(base_result_path=f"../../test_results/agent_results/{PROMPT_REFINER_MODEL}"):
     anchors = defaultdict(dict)
     reason_pattern = re.compile(r"^(?P<timestamp>.+)_(?P<reason>with_reason|without_reason)_base$")
     
@@ -108,7 +108,7 @@ def plot_metric_comparison(df, metric="accuracy", reason="with_reason", output_f
     plt.tight_layout()
     
     if output_file is None:
-        output_file = f"../visualizations/core_{PROMPT_REFINER_MODEL}/{metric}_trend_{reason}.png"
+        output_file = f"../visualizations/core_{PROMPT_REFINER_MODEL}_{metric}_trend_{reason}.png"
         
     plt.savefig(output_file, dpi=150)
     plt.close()
