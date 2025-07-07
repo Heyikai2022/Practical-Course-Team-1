@@ -1,1 +1,2 @@
-agent_pipeline/.env
+.env
+__pycache__/
