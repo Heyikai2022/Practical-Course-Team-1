@@ -95,8 +95,11 @@ def plot_metric_comparison(df, metric="accuracy", reason="with_reason", output_f
     for model in df["model"].unique():
         subset = df[df["model"] == model]
         plt.plot(subset["loop"], subset[metric], marker='o', label=model)
-        
-    plt.title(f"{metric.capitalize()} Trend Over Refinement Loops Using {PROMPT_REFINER_MODEL} ({reason.replace('_', ' ').capitalize()})")
+    
+    reason_label = reason.replace('_', ' ').capitalize()
+    plt.title(f"{metric.capitalize()} Trend Over Refinement Loops\n"
+            f"Using {PROMPT_REFINER_MODEL} ({reason_label})")
+    
     plt.xlabel("Refinement Loop")
     plt.ylabel(metric.capitalize())
     plt.xticks(sorted(df["loop"].unique()))
@@ -143,7 +146,9 @@ def plot_reason_comparison(df, metric="accuracy", output_file=None):
                 label=f"{model} ({reason})"
             )
             
-    plt.title(f"{metric.capitalize()} Trend: With vs Without Reason (All Models)")
+    plt.title(f"{metric.capitalize()} Trend Using {PROMPT_REFINER_MODEL}: \n"
+            f"With vs Without Reason (All Models)")
+    
     plt.xlabel("Refinemnt Loop")
     plt.ylabel(metric.capitalize())
     if metric == "mcc":
