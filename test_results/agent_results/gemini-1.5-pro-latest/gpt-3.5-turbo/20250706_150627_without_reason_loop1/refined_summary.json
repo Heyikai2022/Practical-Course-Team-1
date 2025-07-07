@@ -3,10 +3,11 @@
   "loop": 1,
   "reason": "without_reason",
   "refined": 51,
-  "new_alignment": 20,
-  "fp": 8,
-  "fn": 23,
-  "accuracy": 0.876,
-  "balanced_accuracy": 0.6183473389355743,
-  "mcc": 0.16301714422383493
+  "new_alignment": 22,
+  "all_alignment": 221,
+  "fp": 9,
+  "fn": 20,
+  "accuracy": 0.884,
+  "balanced_accuracy": 0.5829831932773109,
+  "mcc": 0.12275025232117855
 }
