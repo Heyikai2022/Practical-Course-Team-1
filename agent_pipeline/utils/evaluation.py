@@ -1,4 +1,8 @@
 def parse_judgment(output: str) -> str:
+    # For checking AIMessage
+    if hasattr(output, "content"):
+        output = output.content
+        
     lowered = output.lower()
     if "judgment: biased" in lowered:
         return "biased"
