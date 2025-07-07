@@ -29,4 +29,4 @@ plot_metric_comparison(df, metric="accuracy", reason=REASON)
 plot_metric_comparison(df, metric="balanced_accuracy", reason=REASON)
 plot_metric_comparison(df, metric="mcc", reason=REASON)
 
-print(f"✅ Plots done for {REASON}")
+print(f"✅ Plots done for {REASON} using {PROMPT_REFINER_MODEL}")
