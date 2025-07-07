@@ -1,7 +1,7 @@
 {
-  "Pro Count": 206,
+  "Pro Count": 316,
   "Anti Count": 98,
-  "Neu Count": 196,
+  "Neu Count": 86,
   "Check Count": 500,
-  "Correctness Rate(before check)": "100.0%"
+  "Correctness Rate(before check)": "76.6%"
 }
