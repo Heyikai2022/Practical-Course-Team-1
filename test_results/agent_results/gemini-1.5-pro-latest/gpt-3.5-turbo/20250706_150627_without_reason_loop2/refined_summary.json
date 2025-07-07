@@ -2,11 +2,12 @@
   "baseline": "20250706_150627",
   "loop": 2,
   "reason": "without_reason",
-  "refined": 31,
-  "new_alignment": 8,
-  "fp": 6,
+  "refined": 29,
+  "new_alignment": 3,
+  "all_alignment": 224,
+  "fp": 9,
   "fn": 17,
-  "accuracy": 0.5490196078431373,
-  "balanced_accuracy": 0.532051282051282,
-  "mcc": 0.05464562462349677
+  "accuracy": 0.896,
+  "balanced_accuracy": 0.5892857142857143,
+  "mcc": 0.1407058514986592
 }
