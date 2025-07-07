@@ -12,7 +12,7 @@ from utils.io import load_json, save_json
 from config.settings import PROMPT_REFINER_MODEL, TARGET_MODEL_NAME, REASON
 
 # === Link back to baseline run ===
-BASELINE_TIMESTAMP = "20250706_200201"  # Fill the baseline_timestamp (to be found in the summary.json) here to track the whole refinement, e.g. the baseline run: 20240627_223000
+BASELINE_TIMESTAMP = ""  # Fill the baseline_timestamp (to be found in the summary.json) here to track the whole refinement, e.g. the baseline run: 20240627_223000
 LOOP = 5  # Which loop number this is, should now be manually edited (could be automated later!)
 
 reason_suffix = "with_reason" if REASON else "without_reason"
