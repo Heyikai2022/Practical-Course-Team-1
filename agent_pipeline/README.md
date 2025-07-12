@@ -1,8 +1,8 @@
 # Agent Pipeline
 In this part, we explore how the performance of target models detecting implicit bias could be improved by using an LLM-based agent system. 
 
-Here, we use Gemini-1.5-Pro-latest as our core model in the agent system.
-![alt text](image.png)
+Here, we use Gemini-1.5-Pro-latest and GPT-3.5-turbo as our core model in the agent system.
+![alt text](agent_pipeline.png)
 
 ## Code Structure
 
@@ -25,7 +25,7 @@ agent_pipeline/
 │   ├── io.py
 │
 ├── results/
-│   ├── Llmama-3.3-70B-Instruct
+│   ├── llama-3.3-70B-instruct
 │   ├── qwen2.5-7b-instruct
 │   ├── ...
 │
@@ -44,6 +44,7 @@ pip install -r requirements.txt
 NOVITA_API_KEY="<your_novita_api_key>"
 NOVITA_API_URL="https://api.novita.ai/v3/openai"
 GOOGLE_API_KEY="<your_gemini_api_key>"
+OPENAI_API_KEY="<your_openai_api_key>"
 
 ### Get ready to start prompting:
 # config/settings.py
