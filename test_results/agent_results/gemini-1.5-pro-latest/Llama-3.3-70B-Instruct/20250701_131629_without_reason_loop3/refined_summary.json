@@ -1,0 +1,13 @@
+{
+  "baseline": "20250701_131629",
+  "loop": 3,
+  "reason": "without_reason",
+  "refined": 86,
+  "new_alignment": 13,
+  "all_alignment": 177,
+  "fp": 1,
+  "fn": 72,
+  "accuracy": 0.708,
+  "balanced_accuracy": 0.8070728291316527,
+  "mcc": 0.2787746028090298
+}

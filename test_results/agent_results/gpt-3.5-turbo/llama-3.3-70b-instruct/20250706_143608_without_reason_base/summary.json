@@ -1,0 +1,12 @@
+{
+  "model": "llama-3.3-70b-instruct",
+  "reason": "without_reason",
+  "alignments": 204,
+  "fp": 12,
+  "fn": 34,
+  "check": 0,
+  "accuracy": 0.816,
+  "balanced_accuracy": 0.42857142857142855,
+  "mcc": -0.0890870806374748,
+  "timestamp": "20250706_143608"
+}

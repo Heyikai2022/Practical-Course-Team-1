@@ -1,0 +1,8 @@
+NUM: 500
+CHECK: 32
+N/A: 2
+P: 21
+A: 8
+N: 1
+
+Correctness Rate(after check): (21+380)/(500-2) = 80.5%
