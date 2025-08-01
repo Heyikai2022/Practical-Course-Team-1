@@ -1,0 +1,12 @@
+{
+  "model": "gemma-3-27b-it",
+  "reason": "without_reason",
+  "seed": 0,
+  "alignments": 125,
+  "fp": 5,
+  "fn": 117,
+  "accuracy": 0.5060728744939271,
+  "balanced_accuracy": 0.5248459167950693,
+  "mcc": 0.02050094912684502,
+  "timestamp": "20250731_002403"
+}
