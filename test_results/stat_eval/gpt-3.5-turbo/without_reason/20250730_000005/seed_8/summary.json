@@ -1,0 +1,12 @@
+{
+  "model": "gpt-3.5-turbo",
+  "reason": "without_reason",
+  "seed": 8,
+  "alignments": 205,
+  "fp": 12,
+  "fn": 33,
+  "accuracy": 0.82,
+  "balanced_accuracy": 0.43067226890756305,
+  "mcc": -0.0875647369795466,
+  "timestamp": "20250730_000005"
+}

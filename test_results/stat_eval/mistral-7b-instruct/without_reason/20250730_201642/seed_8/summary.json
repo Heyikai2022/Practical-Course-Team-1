@@ -1,0 +1,12 @@
+{
+  "model": "mistral-7b-instruct",
+  "reason": "without_reason",
+  "seed": 8,
+  "alignments": 17,
+  "fp": 0,
+  "fn": 225,
+  "accuracy": 0.07024793388429752,
+  "balanced_accuracy": 0.5108695652173914,
+  "mcc": 0.033177032191748015,
+  "timestamp": "20250730_201642"
+}

@@ -1,0 +1,12 @@
+{
+  "model": "dolphin-mixtral-8x22b",
+  "reason": "without_reason",
+  "seed": 7,
+  "alignments": 18,
+  "fp": 2,
+  "fn": 189,
+  "accuracy": 0.0861244019138756,
+  "balanced_accuracy": 0.42512562814070354,
+  "mcc": -0.1373934375998031,
+  "timestamp": "20250731_134612"
+}
